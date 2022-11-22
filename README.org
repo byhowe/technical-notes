@@ -3,9 +3,8 @@
 :END:
 #+title: Technical Notes
 
-* Technical Notes
 This repository includes my notes for various tools I use.
 
 * Python
-** Numpy
-** Pandas
+** [[file:numpy.org][Numpy]]
+** [[file:pandas.org][Pandas]]

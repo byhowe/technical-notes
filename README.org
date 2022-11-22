@@ -2,6 +2,7 @@
 :ID:       53b5cdb6-3f2f-4abe-b404-230531d546d2
 :END:
 #+title: Technical Notes
+#+options: num:2 toc:2
 
 This repository includes my notes for various tools I use.
 

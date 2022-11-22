@@ -3,3 +3,29 @@
 :ROAM_ALIASES: pandas
 :END:
 #+title: Pandas
+
+* ~Series~
+One dimentional ~ndarray~ (N-dimentional array) with axis labels.
+** Create from ~list~
+#+begin_src python
+years = [1776, 1867, 1821]
+countries = ['USA', 'Canada', 'Mexico']
+indep = pd.Series(data=years, index=countries)
+indep
+# USA       1776
+# Canada    1867
+# Mexico    1821
+# dtype: int64
+
+indep['USA'] # or indep[0]
+# 1776
+#+end_src
+
+** Create from ~dict~
+#+begin_src python
+pd.Series({ 'Sam': 5, 'Frank': 10, 'Spike': 7 })
+# Sam       5
+# Frank    10
+# Spike     7
+# dtype: int64
+#+end_src

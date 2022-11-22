@@ -6,6 +6,8 @@
 
 * ~Series~
 One dimentional ~ndarray~ (N-dimentional array) with axis labels.
++ ~index~: Pandas represents ~Series~ as a numerical array. ~index~ is stored
+  seperately.
 ** Create from ~list~
 #+begin_src python
 years = [1776, 1867, 1821]

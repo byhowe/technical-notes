@@ -5,7 +5,7 @@
 #+title: Numpy
 
 * Built-in methods to create arrays
-** `array`
+** ~array~
 #+begin_src python
 np.array([[1,2,3],[4,5,6],[7,8,9]])
 # array([[1, 2, 3],
@@ -13,13 +13,13 @@ np.array([[1,2,3],[4,5,6],[7,8,9]])
 #        [7, 8, 9]])
 #+end_src
 
-** `arange`
+** ~arange~
 #+begin_src python
 np.arange(0, 11, 2)
 # array([ 0,  2,  4,  6,  8, 10])
 #+end_src
 
-** `zeros`, `ones`
+** ~zeros~, ~ones~
 #+begin_src python
 np.zeros((5, 5))
 # array([[0., 0., 0., 0., 0.],
@@ -29,15 +29,15 @@ np.zeros((5, 5))
 #        [0., 0., 0., 0., 0.]])
 #+end_src
 
-** `linspace`
-Return `n` evenly spaced numbers over `[a, b]` (both inclusive).
+** ~linspace~
+Return ~n~ evenly spaced numbers over ~[a, b]~ (both inclusive).
 #+begin_src python
 np.linspace(0, 5, 21)
 # array([0.  , 0.25, 0.5 , 0.75, 1.  , 1.25, 1.5 , 1.75, 2.  , 2.25, 2.5 ,
 #        2.75, 3.  , 3.25, 3.5 , 3.75, 4.  , 4.25, 4.5 , 4.75, 5.  ])
 #+end_src
 
-** `eye`
+** ~eye~
 Creates an identity matrix.
 #+begin_src python
 np.eye(4)
@@ -48,14 +48,14 @@ np.eye(4)
 #+end_src
 
 * Random
-** `seed`
+** ~seed~
 #+begin_src python
 np.random.seed(42)
 np.random.rand(4)
 # array([0.37454012, 0.95071431, 0.73199394, 0.59865848])
 #+end_src
 
-** `rand`
+** ~rand~
 Creates an array of the given shape populated with random samples from a
 *uniform distribution* over [0, 1].
 #+begin_src python
@@ -67,15 +67,15 @@ np.random.rand(5,5)
 #        [0.5814085 , 0.37563686, 0.15266028, 0.42948309, 0.26434141]])
 #+end_src
 
-** `randn`
+** ~randn~
 Uses the *standard distribution* (σ = 1) to populate the array.
 #+begin_src python
 np.random.randn(2)
 # array([-0.36633217, -1.40298731])
 #+end_src
 
-** `randint`
-Returns random integers from `low` (inclusive) to `high` (exclusive).
+** ~randint~
+Returns random integers from ~low~ (inclusive) to ~high~ (exclusive).
 #+begin_src python
 np.random.randint(0, 100)
 # 71
@@ -84,8 +84,8 @@ np.random.randint(0, 10, 9)
 #+end_src
 
 * Array attributes and methods
-** `reshape`
-(`rows`, `columns`)
+** ~reshape~
+(~rows~, ~columns~)
 #+begin_src python
 np.arange(0, 25).reshape(5, 5)
 # array([[ 0,  1,  2,  3,  4],
@@ -95,7 +95,7 @@ np.arange(0, 25).reshape(5, 5)
 #        [20, 21, 22, 23, 24]])
 #+end_src
 
-** `min`, `max`, `argmin`, `argmax`
+** ~min~, ~max~, ~argmin~, ~argmax~
 #+begin_src python
 arr = np.random.randint(0, 100, 10)
 arr
@@ -110,21 +110,21 @@ arr.argmin()
 # 7
 #+end_src
 
-** `shape`
-(`rows`, `columns`)
+** ~shape~
+(~rows~, ~columns~)
 #+begin_src python
 np.arange(0, 25).shape # Note that this array would better be displayed
 # vertically to match the shape. However, numpy displays it horizontaly.
 # (25,)
 #+end_src
-** `dtype`
+** ~dtype~
 #+begin_src python
 arr = np.arange(0, 25, dtype='float16') # intx, uintx, floatx
 arr.dtype
 # dtype('float16')
 #+end_src
 
-** `size`
+** ~size~
 Returns the length of the array.
 #+begin_src python
 a = np.array([3, 1, 5, 2, 5, 1, 1, 5, 1, 4, 2, 1, 4, 5, 3, 4, 5, 2, 4, 2, 6, 6, 3, 6, 2, 3, 5, 6, 5])
@@ -148,7 +148,7 @@ a1[1] = 100
 a2
 # array([  0, 100,   2,   3,   4])
 #+end_src
-** `copy`
+** ~copy~
 #+begin_src python
 a1 = np.arange(0, 10)
 a2 = a1[:5].copy()
@@ -164,8 +164,8 @@ arr
 # array([100, 100, 100, 100, 100,   5,   6,   7,   8,   9])
 #+end_src
 ** Slicing 2-D
-Using `:` is important when slicing. It changes the shape of the output. Using
-`:` keeps the shape.
+Using ~:~ is important when slicing. It changes the shape of the output. Using
+~:~ keeps the shape.
 #+begin_src python
 a = np.arange(0, 100, 5).reshape(4, 5)
 a
@@ -201,7 +201,7 @@ a[gt5]
 #+end_src
 
 * Operations
-** `+`, `-`, `/`, `*`
+** ~+~, ~-~, ~/~, ~*~
 Division by zero will not cause an error. Instead it will issue a warning.
 #+begin_src python
 a = np.array([5, 7, 1, 0])

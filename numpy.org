@@ -191,6 +191,7 @@ a[1:, 3]
 #+end_src
 
 * Conditional selection
+Includes a pointer to the original array.
 #+begin_src python
 a = np.random.randint(0, 10, 20)
 a
@@ -198,6 +199,10 @@ a
 gt5 = a > 5
 a[gt5]
 # array([7, 9, 6, 9, 6, 6, 6])
+
+a[gt5] *= 10
+# array([70,  2,  0,  3,  2, 90, 60,  0, 90, 60,  5, 60,  0,  5,  3, 60,  1,
+#         1,  0,  2])
 #+end_src
 
 * Operations

@@ -7,5 +7,5 @@
 This repository includes my notes for various tools I use.
 
 * Python
-** 1. [[file:numpy.org][Numpy]]
-** 2. [[file:pandas.org][Pandas]]
+1. [[file:numpy.org][Numpy]]
+2. [[file:pandas.org][Pandas]]

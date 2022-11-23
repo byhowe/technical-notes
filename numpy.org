@@ -117,6 +117,11 @@ np.arange(0, 25).shape # Note that this array would better be displayed
 # vertically to match the shape. However, numpy displays it horizontaly.
 # (25,)
 #+end_src
+** ~ndim~
+#+begin_src python
+np.arange(0, 125).reshape(5, 5, 5).ndim
+# 3
+#+end_src
 ** ~dtype~
 #+begin_src python
 arr = np.arange(0, 25, dtype='float16') # intx, uintx, floatx
@@ -130,6 +135,12 @@ Returns the length of the array.
 a = np.array([3, 1, 5, 2, 5, 1, 1, 5, 1, 4, 2, 1, 4, 5, 3, 4, 5, 2, 4, 2, 6, 6, 3, 6, 2, 3, 5, 6, 5])
 a.size
 # 20
+#+end_src
+** ~itemsize~
+Number of bytes that the underlying data type requires to store one element.
+#+begin_src python
+np.array([1, 2, 3], dtype=np.uint64).itemsize
+# 8
 #+end_src
 * Indexing and slicing
 ** Slicing 1-D
@@ -222,3 +233,77 @@ a / 0
 # 1: RuntimeWarning: invalid value encountered in divide
 # array([inf, inf, inf, nan])
 #+end_src
+* Data types
+** Numpy data types
+Here are some of the types that numpy supports. Consult the documentation for
+more information.
+| Data type                                                       | Description            |
+|-----------------------------------------------------------------+------------------------|
+| ~bool_~, ~bool8~                                                | Boolean                |
+| ~int_~, ~intc~, ~intp~, ~int8~, ~int16~, ~int32~, ~int64~       | Integer types          |
+| ~uint~, ~uintc~, ~uintp~, ~uint8~, ~uint16~, ~uint32~, ~uint64~ | Unsigned integer types |
+| ~float_~, ~float16~, ~float32~, ~float64~                       | Float types            |
+| ~complex_~, ~complex64~, ~complex128~                           | Complex types          |
+** Constructing with data type
+#+begin_src python
+np.array([1, 2, 3, 4, 5], dtype=np.float16)
+# array([1., 2., 3., 4., 5.], dtype=float16)
+#+end_src
+** Structured arrays
+Structured arrays are ndarrays whose datatype is a composition of simpler
+datatypes organized as a sequence of named fields. They closely mimic C ~struct~ for low-level manipulation and interpretation of binary blobs.
+
+1. A list of tuples can be used to express the layout.
+   ~np.dtype([(fieldname, datatype, shape), ...])~ where ~shape~ is optional.
+2. A string of comma-seperated dtype specifications.
+   #+begin_src python
+   np.dtype('i8, f4, S3, ...')
+   # dtype([('f0', '<i8'), ('f1', '<f4'), ('f2', 'S3'), ...])
+   #+end_src
+3. A dictionary of field parameter arrays. This is the most flexible option.
+   * ~names~, ~formats~ have to be specified and must be of the same length.
+   * ~offsets~ specifies the offset of each column from the start.
+   * ~itemsize~ specifies the total size of the structure. It must be able to
+     contain the structure.
+   #+begin_src python
+   np.dtype({'names': ['col1', 'col2'], 'formats': ['i4', 'f4']})
+   # dtype([('col1', '<i4'), ('col2', '<f4')])
+   np.dtype({'names':   ['col1', 'col2'],
+             'formats': ['i4',   'f4'],
+             'offsets': [0,      4],
+             'itemsize': 12})
+   # dtype({'names': ['col1', 'col2'], 'formats': ['<i4', '<f4'], 'offsets': [0, 4], 'itemsize': 12})
+   #+end_src
+4. A dictionary of field names.
+   #+begin_src python
+   np.dtype({'col1': ('i1', 0), 'col2': ('f4', 1)})
+   # dtype([('col1', 'i1'), ('col2', '<f4')])
+   #+end_src
+
+#+begin_src python
+population = np.dtype([('country', 'U20'), ('density', '=i4'), ('area', '=i4'), ('population', '=i4')])
+table = np.array([
+    ('Netherlands', 393, 41526, 16928800),
+    ('Belgium', 337, 30510, 11007020),
+    ('United Kingdom', 256, 243610, 62262000),
+    ('Germany', 233, 357021, 81799600),
+    ('Liechtenstein', 205, 160, 32842),
+    ('Italy', 192, 301230, 59715625),
+    ('Switzerland', 177, 41290, 7301994),
+    ('Luxembourg', 173, 2586, 512000),
+    ('France', 111, 547030, 63601002),
+    ('Austria', 97, 83858, 8169929),
+    ('Greece', 81, 131940, 11606813),
+    ('Ireland', 65, 70280, 4581269),
+    ('Sweden', 20, 449964, 9515744),
+    ('Finland', 16, 338424, 5410233),
+    ('Norway', 13, 385252, 5033675),
+], dtype=population)
+#+end_src
+** Endiannes
+- ~'<i8'~ use little-endian. x86 architecture and some Arm chips use this
+  format.
+- ~'>i8'~ use big-endian. This format should be used when transmitting data over
+  a network.
+- ~'=i8'~ use native-endiannes of the system. It is system-dependant, so
+  shouldn't be use accross systems.

@@ -9,7 +9,7 @@ One dimentional ~ndarray~ (N-dimentional array) with axis labels.
 + ~index~: Pandas represents ~Series~ as a numerical array. ~index~ is stored
   seperately.
 ** Create from ~list~
-#+begin_src python :session
+#+begin_src python  :session :export both
 years = [1776, 1867, 1821]
 countries = ['USA', 'Canada', 'Mexico']
 indep = pd.Series(data=years, index=countries)
@@ -24,7 +24,7 @@ indep['USA'] # or indep[0]
 #+end_src
 
 ** Create from ~dict~
-#+begin_src python :session
+#+begin_src python  :session :export both
 pd.Series({ 'Sam': 5, 'Frank': 10, 'Spike': 7 })
 # Sam       5
 # Frank    10
@@ -33,7 +33,7 @@ pd.Series({ 'Sam': 5, 'Frank': 10, 'Spike': 7 })
 #+end_src
 
 ** Properties of ~Series~
-#+begin_src python :session
+#+begin_src python  :session :export both
 q1 = { 'Japan': 80, 'China': 450, 'India': 200, 'USA': 250 }
 q2 = { 'Brazil': 100,'China': 500, 'India': 210,'USA': 260 }
 sales_Q1 = pd.Series(q1)
@@ -41,14 +41,14 @@ sales_Q2 = pd.Series(q2)
 #+end_src
 
 *** Index keys
-#+begin_src python :session
+#+begin_src python  :session :export both
 sales_Q2.keys()
 # Index(['Brazil', 'China', 'India', 'USA'], dtype='object')
 #+end_src
 
 *** Broadcasting
 Same as in numpy.
-#+begin_src python :session
+#+begin_src python  :session :export both
 sales_Q1 * 3
 # Japan     240
 # China    1350
@@ -59,7 +59,7 @@ sales_Q1 * 3
 
 *** ~+~, ~-~, ~/~, ~*~
 Pandas uses ~NaN~ for missing values.
-#+begin_src python :session
+#+begin_src python  :session :export both
 sales_Q1 + sales_Q2
 # Brazil      NaN
 # China     950.0
@@ -70,7 +70,7 @@ sales_Q1 + sales_Q2
 #+end_src
 
 - Use ~.add()~ (or other operator methods) to specify a ~fill_value~.
-#+begin_src python :session
+#+begin_src python  :session :export both
 sales_Q1.add(sales_Q2, fill_value=0)
 # Brazil    100.0
 # China     950.0
@@ -83,7 +83,7 @@ sales_Q1.add(sales_Q2, fill_value=0)
 * ~DataFrame~
 A group of ~Series~ objects that share the same index.
 ** Creating a DataFrame
-#+begin_src python :session
+#+begin_src python  :session :export both
 d = np.random.randint(0, 100, (4, 3))
 i = np.array(['CA', 'NY', 'AZ', 'TX'], dtype='U2')
 c = np.array(['Jan', 'Feb', 'Mar'], dtype='U3')
@@ -103,12 +103,12 @@ df.info()
 
 ** Attributes and methods of a DataFrame
 - ~columns~
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.columns
 # Index(['Jan', 'Feb', 'Mar'], dtype='object')
 #+end_src
 - ~index~
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.index
 # Index(['CA', 'NY', 'AZ', 'TX'], dtype='object')
 #+end_src
@@ -118,7 +118,7 @@ df.index
   Gives information about a dataframe.
 - ~describe~
   Gives basic statistical information on numerical columns.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.describe()
 #             Jan        Feb        Mar
 # count   4.00000   4.000000   4.000000
@@ -132,7 +132,7 @@ df.describe()
 #+end_src
 - ~transpose~
   Transpose (or flip) columns and rows.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.describe().transpose()
 #      count   mean        std   min    25%   50%    75%   max
 # Jan    4.0  31.25  26.335970   9.0  16.50  23.5  38.25  69.0
@@ -141,7 +141,7 @@ df.describe().transpose()
 #+end_src
 - ~drop~
   Drops a row or a column depending on the axis.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.drop('Mar', axis=1) # axis=0 row, axis=1 column
 #     Jan  Feb
 # CA   89   69
@@ -155,7 +155,7 @@ df.drop('Mar', axis=1, inplace=True)
 ** Columns
 *** Indexing
 - Grab a single column. Returns a pandas Series.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df['Jan']
 # CA    69
 # NY    19
@@ -166,13 +166,13 @@ type(df['Jan'])
 # <class 'pandas.core.series.Series'>
 #+end_src
 - Grab multiple columns.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df[['Jan', 'Feb']]
 type(df[['Jan', 'Feb']])
 # <class 'pandas.core.frame.DataFrame'>
 #+end_src
 *** Assign new columns
-#+begin_src python :session
+#+begin_src python  :session :export both
 df['Z Feb'] = np.round((df['Feb'] - df['Feb'].mean()) / df['Feb'].std(), 2)
 df['Z Feb']
 #     Jan  Feb  Mar  Z Feb
@@ -184,7 +184,7 @@ df['Z Feb']
 ** Rows
 *** Changing the index
 Any primary key may be used as an index.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.set_index('Payment ID').head()
 #             total_bill   tip     sex smoker  ... size price_per_person          Payer Name         CC Number
 # Payment ID                                   ...
@@ -197,7 +197,7 @@ df.set_index('Payment ID').head()
 # [5 rows x 10 columns]
 #+end_src
 To reset index.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.reset_index().head()
 #    index  total_bill   tip     sex smoker  ... size price_per_person          Payer Name         CC Number Payment ID
 # 0      0       16.99  1.01  Female     No  ...    2             8.49  Christy Cunningham  3560325168603410    Sun2959
@@ -210,7 +210,7 @@ df.reset_index().head()
 #+end_src
 *** Querying based on index
 - Integer based indexing.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.iloc[0]
 # total_bill                       16.99
 # tip                               1.01
@@ -226,7 +226,7 @@ df.iloc[0]
 # Name: 0, dtype: object
 #+end_src
 - Label based indexing.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.loc["Sun2959"]
 # total_bill                       16.99
 # tip                               1.01
@@ -241,13 +241,13 @@ df.loc["Sun2959"]
 # Name: Sun2959, dtype: object
 #+end_src
 - Indexing multiple rows.
-#+begin_src python :session
+#+begin_src python  :session :export both
 df.iloc[0:4] # pythonic slicing may be used
 df.loc[['Sun2959', 'Sun5260']]
 #+end_src
 *** Appending rows
 - ~.append()~ method has been deprecated. Use ~.concat()~ instead.
-#+begin_src python :session
+#+begin_src python  :session :export both
 row = df.iloc[0]
 pd.concat([df, row.to_frame().T])
 #+end_src

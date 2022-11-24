@@ -256,29 +256,29 @@ datatypes organized as a sequence of named fields. They closely mimic C ~struct~
 1. A list of tuples can be used to express the layout.
    ~np.dtype([(fieldname, datatype, shape), ...])~ where ~shape~ is optional.
 2. A string of comma-seperated dtype specifications.
-   #+begin_src python
-   np.dtype('i8, f4, S3, ...')
-   # dtype([('f0', '<i8'), ('f1', '<f4'), ('f2', 'S3'), ...])
-   #+end_src
+#+begin_src python
+np.dtype('i8, f4, S3, ...')
+# dtype([('f0', '<i8'), ('f1', '<f4'), ('f2', 'S3'), ...])
+#+end_src
 3. A dictionary of field parameter arrays. This is the most flexible option.
    * ~names~, ~formats~ have to be specified and must be of the same length.
    * ~offsets~ specifies the offset of each column from the start.
    * ~itemsize~ specifies the total size of the structure. It must be able to
      contain the structure.
-   #+begin_src python
-   np.dtype({'names': ['col1', 'col2'], 'formats': ['i4', 'f4']})
-   # dtype([('col1', '<i4'), ('col2', '<f4')])
-   np.dtype({'names':   ['col1', 'col2'],
-             'formats': ['i4',   'f4'],
-             'offsets': [0,      4],
-             'itemsize': 12})
-   # dtype({'names': ['col1', 'col2'], 'formats': ['<i4', '<f4'], 'offsets': [0, 4], 'itemsize': 12})
-   #+end_src
+#+begin_src python
+np.dtype({'names': ['col1', 'col2'], 'formats': ['i4', 'f4']})
+# dtype([('col1', '<i4'), ('col2', '<f4')])
+np.dtype({'names':   ['col1', 'col2'],
+          'formats': ['i4',   'f4'],
+          'offsets': [0,      4],
+          'itemsize': 12})
+# dtype({'names': ['col1', 'col2'], 'formats': ['<i4', '<f4'], 'offsets': [0, 4], 'itemsize': 12})
+#+end_src
 4. A dictionary of field names.
-   #+begin_src python
-   np.dtype({'col1': ('i1', 0), 'col2': ('f4', 1)})
-   # dtype([('col1', 'i1'), ('col2', '<f4')])
-   #+end_src
+#+begin_src python
+np.dtype({'col1': ('i1', 0), 'col2': ('f4', 1)})
+# dtype([('col1', 'i1'), ('col2', '<f4')])
+#+end_src
 
 #+begin_src python
 population = np.dtype([('country', 'U20'), ('density', '=i4'), ('area', '=i4'), ('population', '=i4')])

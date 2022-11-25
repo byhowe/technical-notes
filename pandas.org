@@ -5,19 +5,17 @@
 #+title: Pandas
 
 * Loading pandas
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports none
 import numpy as np
 import pandas as pd
 #+end_src
-
-#+RESULTS:
 
 * ~Series~
 One dimentional ~ndarray~ (N-dimentional array) with axis labels.
 + ~index~: Pandas represents ~Series~ as a numerical array. ~index~ is stored
   seperately.
 ** Create from ~list~
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 years = [1776, 1867, 1821]
 countries = ['USA', 'Canada', 'Mexico']
 indep = pd.Series(data=years, index=countries)
@@ -30,7 +28,7 @@ indep
 : Mexico    1821
 : dtype: int64
 
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 indep['USA'] # or indep[0]
 #+end_src
 
@@ -38,7 +36,7 @@ indep['USA'] # or indep[0]
 : 1776
 
 ** Create from ~dict~
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 pd.Series({ 'Sam': 5, 'Frank': 10, 'Spike': 7 })
 #+end_src
 
@@ -49,7 +47,7 @@ pd.Series({ 'Sam': 5, 'Frank': 10, 'Spike': 7 })
 : dtype: int64
 
 ** Properties of ~Series~
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 q1 = { 'Japan': 80, 'China': 450, 'India': 200, 'USA': 250 }
 q2 = { 'Brazil': 100,'China': 500, 'India': 210,'USA': 260 }
 sales_Q1 = pd.Series(q1)
@@ -59,7 +57,7 @@ sales_Q2 = pd.Series(q2)
 #+RESULTS:
 
 *** Index keys
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 sales_Q2.keys()
 #+end_src
 
@@ -68,7 +66,7 @@ sales_Q2.keys()
 
 *** Broadcasting
 Same as in numpy.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 sales_Q1 * 3
 #+end_src
 
@@ -81,7 +79,7 @@ sales_Q1 * 3
 
 *** ~+~, ~-~, ~/~, ~*~
 Pandas uses ~NaN~ for missing values.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 sales_Q1 + sales_Q2
 #+end_src
 
@@ -94,7 +92,7 @@ sales_Q1 + sales_Q2
 : dtype: float64
 
 - Use ~.add()~ (or other operator methods) to specify a ~fill_value~.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 sales_Q1.add(sales_Q2, fill_value=0)
 #+end_src
 
@@ -109,7 +107,7 @@ sales_Q1.add(sales_Q2, fill_value=0)
 * ~DataFrame~
 A group of ~Series~ objects that share the same index.
 ** Creating a DataFrame
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both :results output pp
 d = np.random.randint(0, 100, (4, 3))
 i = np.array(['CA', 'NY', 'AZ', 'TX'], dtype='U2')
 c = np.array(['Jan', 'Feb', 'Mar'], dtype='U3')
@@ -118,20 +116,22 @@ df.info()
 #+end_src
 
 #+RESULTS:
-: <class 'pandas.core.frame.DataFrame'>
-: Index: 4 entries, CA to TX
-: Data columns (total 3 columns):
-:  #   Column  Non-Null Count  Dtype
-: ---  ------  --------------  -----
-:  0   Jan     4 non-null      int64
-:  1   Feb     4 non-null      int64
-:  2   Mar     4 non-null      int64
-: dtypes: int64(3)
-: memory usage: 128.0+ bytes
+#+begin_example
+<class 'pandas.core.frame.DataFrame'>
+Index: 4 entries, CA to TX
+Data columns (total 3 columns):
+ #   Column  Non-Null Count  Dtype
+---  ------  --------------  -----
+ 0   Jan     4 non-null      int64
+ 1   Feb     4 non-null      int64
+ 2   Mar     4 non-null      int64
+dtypes: int64(3)
+memory usage: 128.0+ bytes
+#+end_example
 
 ** Attributes and methods of a DataFrame
 - ~columns~
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df.columns
 #+end_src
 
@@ -139,7 +139,7 @@ df.columns
 : Index(['Jan', 'Feb', 'Mar'], dtype='object')
 
 - ~index~
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df.index
 #+end_src
 
@@ -152,177 +152,154 @@ df.index
   Gives information about a dataframe.
 - ~describe~
   Gives basic statistical information on numerical columns.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df.describe()
 #+end_src
 
 #+RESULTS:
-:              Jan        Feb        Mar
-: count   4.000000   4.000000   4.000000
-: mean   41.000000  67.000000  74.500000
-: std    33.085747  14.071247  16.703293
-: min     2.000000  53.000000  52.000000
-: 25%    23.000000  59.000000  67.750000
-: 50%    41.000000  64.500000  77.500000
-: 75%    59.000000  72.500000  84.250000
-: max    80.000000  86.000000  91.000000
+:              Jan        Feb       Mar
+: count   4.000000   4.000000   4.00000
+: mean   14.000000  39.500000  44.25000
+: std     8.406347  31.171568  18.20943
+: min     5.000000   4.000000  23.00000
+: 25%     9.500000  28.000000  35.75000
+: 50%    13.000000  37.000000  43.50000
+: 75%    17.500000  48.500000  52.00000
+: max    25.000000  80.000000  67.00000
 
 - ~transpose~
   Transpose (or flip) columns and rows.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df.describe().transpose()
 #+end_src
 
 #+RESULTS:
-:      count  mean        std   min    25%   50%    75%   max
-: Jan    4.0  41.0  33.085747   2.0  23.00  41.0  59.00  80.0
-: Feb    4.0  67.0  14.071247  53.0  59.00  64.5  72.50  86.0
-: Mar    4.0  74.5  16.703293  52.0  67.75  77.5  84.25  91.0
+:      count   mean        std   min    25%   50%   75%   max
+: Jan    4.0  14.00   8.406347   5.0   9.50  13.0  17.5  25.0
+: Feb    4.0  39.50  31.171568   4.0  28.00  37.0  48.5  80.0
+: Mar    4.0  44.25  18.209430  23.0  35.75  43.5  52.0  67.0
 
 - ~drop~
   Drops a row or a column depending on the axis.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df.drop('Mar', axis=1) # axis=0 row, axis=1 column
 # df.drop('Mar', axis=1, inplace=True)
 #+end_src
 
 #+RESULTS:
 :     Jan  Feb
-: CA   27   29
-: NY   12   67
-: AZ   26   29
-: TX   87   87
+: CA    5    4
+: NY   25   36
+: AZ   11   80
+: TX   15   38
 
   ~inplace~ may be used to permenantly delete. However, there are signs it will
   be deprecated. Assigning the resulting dataframe to itself is more preferable.
 ** Columns
 *** Indexing
 - Grab a single column. Returns a pandas Series.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df['Jan']
 #+end_src
 
 #+RESULTS:
-: CA    27
-: NY    12
-: AZ    26
-: TX    87
+: CA     5
+: NY    25
+: AZ    11
+: TX    15
 : Name: Jan, dtype: int64
 
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 type(df['Jan'])
 #+end_src
 
 #+RESULTS:
-: pandas.core.series.Series
+: <class 'pandas.core.series.Series'>
 
 - Grab multiple columns.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df[['Jan', 'Feb']]
 #+end_src
 
 #+RESULTS:
 :     Jan  Feb
-: CA   27   29
-: NY   12   67
-: AZ   26   29
-: TX   87   87
+: CA    5    4
+: NY   25   36
+: AZ   11   80
+: TX   15   38
 
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 type(df[['Jan', 'Feb']])
 #+end_src
 
 #+RESULTS:
-: pandas.core.frame.DataFrame
+: <class 'pandas.core.frame.DataFrame'>
 
 *** Assign new columns
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df['Z Feb'] = np.round((df['Feb'] - df['Feb'].mean()) / df['Feb'].std(), 2)
 df['Z Feb']
 #+end_src
 
 #+RESULTS:
-: CA   -0.83
-: NY    0.48
-: AZ   -0.83
-: TX    1.18
+: CA   -1.14
+: NY   -0.11
+: AZ    1.30
+: TX   -0.05
 : Name: Z Feb, dtype: float64
 
 ** Rows
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df = pd.read_csv('tips.csv')
 df.head()
 #+end_src
 
 #+RESULTS:
-#+begin_example
-   total_bill   tip     sex smoker  day    time  size  price_per_person  \
-0       16.99  1.01  Female     No  Sun  Dinner     2              8.49
-1       10.34  1.66    Male     No  Sun  Dinner     3              3.45
-2       21.01  3.50    Male     No  Sun  Dinner     3              7.00
-3       23.68  3.31    Male     No  Sun  Dinner     2             11.84
-4       24.59  3.61  Female     No  Sun  Dinner     4              6.15
-
-           Payer Name         CC Number Payment ID
-0  Christy Cunningham  3560325168603410    Sun2959
-1      Douglas Tucker  4478071379779230    Sun4608
-2      Travis Walters  6011812112971322    Sun4458
-3    Nathaniel Harris  4676137647685994    Sun5260
-4        Tonya Carter  4832732618637221    Sun2251
-#+end_example
+:    total_bill   tip     sex smoker  day  ... size  price_per_person          Payer Name         CC Number  Payment ID
+: 0       16.99  1.01  Female     No  Sun  ...    2              8.49  Christy Cunningham  3560325168603410     Sun2959
+: 1       10.34  1.66    Male     No  Sun  ...    3              3.45      Douglas Tucker  4478071379779230     Sun4608
+: 2       21.01  3.50    Male     No  Sun  ...    3              7.00      Travis Walters  6011812112971322     Sun4458
+: 3       23.68  3.31    Male     No  Sun  ...    2             11.84    Nathaniel Harris  4676137647685994     Sun5260
+: 4       24.59  3.61  Female     No  Sun  ...    4              6.15        Tonya Carter  4832732618637221     Sun2251
+:
+: [5 rows x 11 columns]
 
 *** Changing the index
 Any primary key may be used as an index.
-#+begin_src jupyter-python :session py3 :exports both
-df = df.set_index('Payment ID')
-df.head()
+#+begin_src python :session pd :exports both
+dfp = df.set_index('Payment ID')
+dfp.head()
 #+end_src
 
 #+RESULTS:
-#+begin_example
-            total_bill   tip     sex smoker  day    time  size  \
-Payment ID
-Sun2959          16.99  1.01  Female     No  Sun  Dinner     2
-Sun4608          10.34  1.66    Male     No  Sun  Dinner     3
-Sun4458          21.01  3.50    Male     No  Sun  Dinner     3
-Sun5260          23.68  3.31    Male     No  Sun  Dinner     2
-Sun2251          24.59  3.61  Female     No  Sun  Dinner     4
-
-            price_per_person          Payer Name         CC Number
-Payment ID
-Sun2959                 8.49  Christy Cunningham  3560325168603410
-Sun4608                 3.45      Douglas Tucker  4478071379779230
-Sun4458                 7.00      Travis Walters  6011812112971322
-Sun5260                11.84    Nathaniel Harris  4676137647685994
-Sun2251                 6.15        Tonya Carter  4832732618637221
-#+end_example
+:             total_bill   tip     sex smoker  ... size price_per_person          Payer Name         CC Number
+: Payment ID                                   ...
+: Sun2959          16.99  1.01  Female     No  ...    2             8.49  Christy Cunningham  3560325168603410
+: Sun4608          10.34  1.66    Male     No  ...    3             3.45      Douglas Tucker  4478071379779230
+: Sun4458          21.01  3.50    Male     No  ...    3             7.00      Travis Walters  6011812112971322
+: Sun5260          23.68  3.31    Male     No  ...    2            11.84    Nathaniel Harris  4676137647685994
+: Sun2251          24.59  3.61  Female     No  ...    4             6.15        Tonya Carter  4832732618637221
+:
+: [5 rows x 10 columns]
 
 To reset index.
-#+begin_src jupyter-python :session py3 :exports both
-df = df.reset_index()
-df.head()
+#+begin_src python :session pd :exports both
+dfp.reset_index().head()
 #+end_src
 
 #+RESULTS:
-#+begin_example
-  Payment ID  total_bill   tip     sex smoker  day    time  size  \
-0    Sun2959       16.99  1.01  Female     No  Sun  Dinner     2
-1    Sun4608       10.34  1.66    Male     No  Sun  Dinner     3
-2    Sun4458       21.01  3.50    Male     No  Sun  Dinner     3
-3    Sun5260       23.68  3.31    Male     No  Sun  Dinner     2
-4    Sun2251       24.59  3.61  Female     No  Sun  Dinner     4
-
-   price_per_person          Payer Name         CC Number
-0              8.49  Christy Cunningham  3560325168603410
-1              3.45      Douglas Tucker  4478071379779230
-2              7.00      Travis Walters  6011812112971322
-3             11.84    Nathaniel Harris  4676137647685994
-4              6.15        Tonya Carter  4832732618637221
-#+end_example
+:   Payment ID  total_bill   tip     sex smoker  ...    time size  price_per_person          Payer Name         CC Number
+: 0    Sun2959       16.99  1.01  Female     No  ...  Dinner    2              8.49  Christy Cunningham  3560325168603410
+: 1    Sun4608       10.34  1.66    Male     No  ...  Dinner    3              3.45      Douglas Tucker  4478071379779230
+: 2    Sun4458       21.01  3.50    Male     No  ...  Dinner    3              7.00      Travis Walters  6011812112971322
+: 3    Sun5260       23.68  3.31    Male     No  ...  Dinner    2             11.84    Nathaniel Harris  4676137647685994
+: 4    Sun2251       24.59  3.61  Female     No  ...  Dinner    4              6.15        Tonya Carter  4832732618637221
+:
+: [5 rows x 11 columns]
 
 *** Querying based on index
 - Integer based indexing.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 df.iloc[0]
 #+end_src
 
@@ -338,12 +315,13 @@ size                                 2
 price_per_person                  8.49
 Payer Name          Christy Cunningham
 CC Number             3560325168603410
-Name: Sun2959, dtype: object
+Payment ID                     Sun2959
+Name: 0, dtype: object
 #+end_example
 
 - Label based indexing.
-#+begin_src jupyter-python :session py3 :exports both
-df.loc["Sun2959"]
+#+begin_src python :session pd :exports both
+dfp.loc["Sun2959"]
 #+end_src
 
 #+RESULTS:
@@ -362,42 +340,39 @@ Name: Sun2959, dtype: object
 #+end_example
 
 - Indexing multiple rows.
-#+begin_src jupyter-python :session py3 :exports both
-df.iloc[0:4] # pythonic slicing may be used
-df.loc[['Sun2959', 'Sun5260']]
+#+begin_src python :session pd :exports both
+dfp.iloc[0:4] # pythonic slicing may be used
+dfp.loc[['Sun2959', 'Sun5260']].transpose()
 #+end_src
 
 #+RESULTS:
-:             total_bill   tip     sex smoker  day    time  size  \
-: Payment ID
-: Sun2959          16.99  1.01  Female     No  Sun  Dinner     2
-: Sun5260          23.68  3.31    Male     No  Sun  Dinner     2
-:
-:             price_per_person          Payer Name         CC Number
-: Payment ID
-: Sun2959                 8.49  Christy Cunningham  3560325168603410
-: Sun5260                11.84    Nathaniel Harris  4676137647685994
+#+begin_example
+Payment ID                   Sun2959           Sun5260
+total_bill                     16.99             23.68
+tip                             1.01              3.31
+sex                           Female              Male
+smoker                            No                No
+day                              Sun               Sun
+time                          Dinner            Dinner
+size                               2                 2
+price_per_person                8.49             11.84
+Payer Name        Christy Cunningham  Nathaniel Harris
+CC Number           3560325168603410  4676137647685994
+#+end_example
 
 *** Appending rows
 - ~.append()~ method has been deprecated. Use ~.concat()~ instead.
-#+begin_src jupyter-python :session py3 :exports both
+#+begin_src python :session pd :exports both
 row = df.iloc[0]
 pd.concat([df, row.to_frame().T]).head()
 #+end_src
 
 #+RESULTS:
-#+begin_example
-        total_bill   tip     sex smoker  day    time size price_per_person  \
-Sun2959      16.99  1.01  Female     No  Sun  Dinner    2             8.49
-Sun4608      10.34  1.66    Male     No  Sun  Dinner    3             3.45
-Sun4458      21.01   3.5    Male     No  Sun  Dinner    3              7.0
-Sun5260      23.68  3.31    Male     No  Sun  Dinner    2            11.84
-Sun2251      24.59  3.61  Female     No  Sun  Dinner    4             6.15
-
-                 Payer Name         CC Number
-Sun2959  Christy Cunningham  3560325168603410
-Sun4608      Douglas Tucker  4478071379779230
-Sun4458      Travis Walters  6011812112971322
-Sun5260    Nathaniel Harris  4676137647685994
-Sun2251        Tonya Carter  4832732618637221
-#+end_example
+:   total_bill   tip     sex smoker  day  ... size price_per_person          Payer Name         CC Number Payment ID
+: 0      16.99  1.01  Female     No  Sun  ...    2             8.49  Christy Cunningham  3560325168603410    Sun2959
+: 1      10.34  1.66    Male     No  Sun  ...    3             3.45      Douglas Tucker  4478071379779230    Sun4608
+: 2      21.01   3.5    Male     No  Sun  ...    3              7.0      Travis Walters  6011812112971322    Sun4458
+: 3      23.68  3.31    Male     No  Sun  ...    2            11.84    Nathaniel Harris  4676137647685994    Sun5260
+: 4      24.59  3.61  Female     No  Sun  ...    4             6.15        Tonya Carter  4832732618637221    Sun2251
+:
+: [5 rows x 11 columns]

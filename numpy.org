@@ -1,10 +1,6 @@
-:PROPERTIES:
-:ID:       a3134371-c437-4772-ab5e-9fd3e23aa653
-:ROAM_ALIASES: numpy
-:END:
 #+title: Numpy
+#+options: toc:2 num:2
 
-* Loading Numpy
 #+begin_src python :session np :exports none
 import numpy as np
 #+end_src
@@ -167,17 +163,16 @@ arr.argmin()
 #+RESULTS:
 : 2
 
-** ~shape~
-~(rows, columns, ...)~
+** ~shape~, ~(rows, columns, ...)~
 Each element in a numpy array is a row. However, when
 displayed, it is represented horizontally. It is better to think of it as
 vertical.
-#+begin_src python :session np :exports both
+#+begin_src python :session np :exports both :results pp
 np.arange(0, 25).shape
 #+end_src
 
 #+RESULTS:
-| 25 |
+: (25,)
 
 ** ~ndim~
 #+begin_src python :session np :exports both
@@ -188,13 +183,13 @@ np.arange(0, 125).reshape(5, 5, 5).ndim
 : 3
 
 ** ~dtype~
-#+begin_src python :session np :exports both
+#+begin_src python :session np :exports both :results pp
 arr = np.arange(0, 25, dtype='float16') # intx, uintx, floatx
 arr.dtype
 #+end_src
 
 #+RESULTS:
-: float16
+: dtype('float16')
 
 ** ~size~
 Returns the length of the array.
@@ -335,27 +330,31 @@ a
 * Operations
 ** ~+~, ~-~, ~/~, ~*~
 Division by zero will not cause an error. Instead it will issue a warning.
-#+begin_src python :session np :exports both
+#+begin_src python :session np :exports both :results output pp
 a = np.array([5, 7, 1, 0])
-a / 2
+print(a / 2)
 #+end_src
 
 #+RESULTS:
-| 2.5 | 3.5 | 0.5 | 0 |
+: [2.5 3.5 0.5 0. ]
 
-#+begin_src python :session np :exports both
-a / a
+#+begin_src python :session np :exports both :results output pp
+print(a / a)
 #+end_src
 
 #+RESULTS:
-| 1 | 1 | 1 | nan |
+: /tmp/babel-lNwx4M/python-egPm9p:1: RuntimeWarning: invalid value encountered in divide
+:   print(a / a)
+: [ 1.  1.  1. nan]
 
-#+begin_src python :session np :exports both
-a / 0
+#+begin_src python :session np :exports both :results output pp
+print(a / 0)
 #+end_src
 
 #+RESULTS:
-| inf | inf | inf | nan |
+: /tmp/babel-lNwx4M/python-FCHiJ6:1: RuntimeWarning: divide by zero encountered in divide
+:   print(a / 0)
+: [inf inf inf nan]
 
 * Data types
 ** Numpy data types
@@ -432,8 +431,13 @@ Here is a table called ~population~.
 | Finland        |  16 | 338424 |  5410233 |
 | Norway         |  13 | 385252 |  5033675 |
 
-#+begin_src python :session np :exports both :var population=population_table :results pp
+#+begin_src python :session np :exports none :var population=population_table
 population = list((*l,) for l in population)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src python :session np :exports both :results pp
 pop_t = np.dtype([('country', 'U20'), ('density', '=i4'), ('area', '=i4'), ('population', '=i4')])
 np.array(population, dtype=pop_t)
 #+end_src
